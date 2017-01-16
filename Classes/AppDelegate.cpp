@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "Piano.h"
+#include "Piano/Piano.h"
+#include "PlaneScene/PlaneScene.h"
 
 USING_NS_CC;
 
@@ -27,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = Piano::createScene();
+    auto scene = PlaneScene::createScene();
 
     // run
     director->runWithScene(scene);
