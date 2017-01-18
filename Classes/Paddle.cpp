@@ -2,7 +2,7 @@
 
 Scene* PaddleScene::createScene(){
 	auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_NONE);
 	scene->getPhysicsWorld()->setGravity(Vect(0, 0));
 	auto layer = PaddleScene::create();
 	scene->addChild(layer);
@@ -37,9 +37,9 @@ Scene* PaddleScene::createScene(){
 
 	 auto ballBody = PhysicsBody::createCircle(m_ball->getContentSize().width / 2,
 		 PHYSICS_MATERIAL_BALL_WORLD);
-	 ballBody->setVelocityLimit(800);
+	 ballBody->setVelocityLimit(600);
 	
-	 ballBody->setVelocity(Vec2(0, -1000));
+	 ballBody->setVelocity(Vec2(600, 800));
 	 m_ball->setPhysicsBody(ballBody);
 
 	 ballBody->setContactTestBitmask(0xFFFFFFFF);
@@ -49,7 +49,8 @@ Scene* PaddleScene::createScene(){
 	 m_paddle = Sprite::create("Paddle/paddle.png");
 	 m_paddle->setPosition(visibleSize.width / 2, m_paddle->getContentSize().height / 2);
 	 addChild(m_paddle, 1);
-
+	 //改成多边形算了。。。
+	 //auto paddleBody = PhysicsBody::createPolygon( ,5,PHYSICS_MATERIAL_PADDLE);
 	 auto paddleBody = PhysicsBody::createBox(m_paddle->getContentSize(), PHYSICS_MATERIAL_PADDLE);
 	 paddleBody->setDynamic(false);
 	 m_paddle->setPhysicsBody(paddleBody);
@@ -199,14 +200,14 @@ Scene* PaddleScene::createScene(){
 	 result->setPosition(visibleSize/2);
 	 result->setScale(0.5);
 	 result->setAnchorPoint(Point::ANCHOR_MIDDLE);
-	 Text* text = dynamic_cast<Text*>(result->getChildByName("background")->getChildByName("lblGameOver"));
+	 TextBMFont* text = dynamic_cast<TextBMFont*>(result->getChildByName("background")->getChildByName("lblGameOver"));
 	 if (m_taskTargetNum == 0)
 	 {
-	//	 text->setText("You Win!!");
+		text->setText("You Win!!");
 	 }
 	 else
 	 {
-		// text->setText("You Lose...");
+		 text->setText("You Lose...");
 	 }
 
 
@@ -214,7 +215,7 @@ Scene* PaddleScene::createScene(){
 	 auto start = dynamic_cast<Widget*>(result->getChildByName("background")->getChildByName("Restart"));
 	 start->addTouchEventListener(this, toucheventselector(PaddleScene::touchButton));
 
-	 //因为是之前的ui 所以名字难得改了 叫return menu 比较好
+	
 	 auto back = dynamic_cast<Widget*>(result->getChildByName("background")->getChildByName("Exit"));
 	 back->addTouchEventListener(this, toucheventselector(PaddleScene::touchButton));
 
@@ -251,9 +252,10 @@ Scene* PaddleScene::createScene(){
 	 }
 	 case GamePaddle:
 	 {
-						//这东西必须写在removeAllChildren之前 否则会被remove掉
+						//这东西必须写在removeAllChildren之前 m_taskPage会为默认值
 						m_taskSceneNum = (int)m_taskPage->getCurPageIndex() + 1;
 						removeAllChildren();
+					
 						Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
 
 						setStart();

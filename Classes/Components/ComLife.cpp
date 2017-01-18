@@ -1,4 +1,5 @@
 #include "Components/ComLife.h"
+#include"TowerScene.h"
 
 USING_NS_CC;
 
@@ -51,7 +52,10 @@ bool ComLife::attacked(int damage)
 	}
 	else
 	{
+		//-------------------------------------------
 		dead = true;
+		auto playground = dynamic_cast<TowerScene*>(getOwner()->getParent());
+		playground->changeGold(30);
 	}
 	return dead;
 }

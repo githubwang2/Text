@@ -1,4 +1,5 @@
 #include "Components/ComMove.h"
+#include"TowerScene.h"
 
 USING_NS_CC;
 
@@ -34,6 +35,16 @@ void ComMove::initPath(std::vector<cocos2d::Point> path)
 		float time = dur / NORMAL_SPEED;
 		act.pushBack(MoveTo::create(time, path.at(i)));
 	}
+	//----------------------------------------------------
+	act.pushBack(CallFunc::create([=](){
+		auto playground = dynamic_cast<TowerScene*>(getOwner()->getParent());
+		auto curLife=playground->changeLife(-2);
+		if (curLife <= 0){
+			CCLOG("END");
+		}
+		//消除走到尽头的怪物
+		playground->removeMonster(getOwner());
+	}));
 	m_moveActions = Sequence::create(act);
 }
 

@@ -1,9 +1,6 @@
 #include "TowerScene.h"
 
-#include "Components/ComMove.h"
-#include "Components/ComBullet.h"
-#include "Components/ComTower.h"
-#include "Components/ComLife.h"
+
 
 
 Scene* TowerScene::createScene()
@@ -23,6 +20,11 @@ bool TowerScene::init()
 
 	visibleSize = Director::getInstance()->getVisibleSize();
 
+	//---------Hud    
+	auto hud = GUIReader::getInstance()->widgetFromJsonFile("Tower/HUD/HUD.json");
+	hud->setTag(1);
+	addChild(hud, 2);
+
 
 	start();
 
@@ -31,6 +33,19 @@ bool TowerScene::init()
 
 	attachTowerBuild();
 
+	m_fireManager = FireManager::create();
+	addChild(m_fireManager);
+
+	m_curRound = 1;
+
+	m_gold = 0;
+	changeGold(200);
+	m_curLife = 0;
+	changeLife(30);
+
+
+	createWaveRusher();
+	
 	return true;
 }
 
@@ -105,11 +120,28 @@ void TowerScene::makeMonster(float dt){
 	auto act2 = Sequence::create(act);
 	monster->runAction(act2);
 	*/
+	//
 	auto comLife = ComLife::create(30);
 	monster->addComponent(comLife);
 	auto comMove = ComMove::create(m_pathVec);
 	monster->addComponent(comMove);
+	m_fireManager->m_monsters.push_back(comMove);
 	comMove->startMove();
+	//-----------------------------------------------------------
+	//没生成一个怪物，该波怪物减一，为0停止产生怪物。
+	//波数加1
+	m_monsterCreateLeft--;
+	if (m_monsterCreateLeft==0)
+	{
+		unschedule(schedule_selector(TowerScene::makeMonster));
+		runAction(Sequence::create(DelayTime::create(3 + m_curRound),
+			CallFunc::create([=](){
+			m_curRound++;
+			createWaveRusher();
+		})
+			,nullptr));
+	}
+
 	addChild(monster, 1);
 }
 
@@ -146,10 +178,30 @@ void TowerScene::createTower(Point pos){
 		CCLOG("answer:%s", str.c_str());
 		if (str.compare("True")==0)
 		{
-			Sprite*tower = Sprite::create("Tower/Tower.png");
-			tower->setPosition(blockCenter);
-			addChild(tower, 2);
-			return;
+			//判断金钱是否足够
+			if (m_gold < 150)
+			{
+				auto goldLable = dynamic_cast<Widget*>(getChildByTag(1))->getChildByName("LabelGold");
+				auto toRed = TintBy::create(0.2, -127, -255, -127);
+				goldLable->runAction(Sequence::create(toRed, toRed->reverse(), nullptr));
+				return;//跳出 不运行下面错误的图片
+			}
+			else
+			{
+				changeGold(-150);
+				//---------------------------------//
+				Sprite*tower = Sprite::create("Tower/Tower.png");
+				tower->setPosition(blockCenter);
+
+				//-----------------------
+				auto comTower = ComTower::create();
+				tower->addComponent(comTower);
+				m_fireManager->m_towers.push_back(comTower);
+				//-----------------
+				addChild(tower, 2);
+				return;//跳出 不运行下面错误的图片
+			}
+			
 		}
 	}
 	Sprite*errorPos = Sprite::create("Tower/ErrorPos.png");
@@ -193,3 +245,45 @@ std::string TowerScene::getValue(std::string key, Point&posIngl, TMXLayer*layer,
 	}
 }
 
+//----------------------------------HUD
+void TowerScene::createWaveRusher(){
+	//- 波数
+	auto hud = dynamic_cast<Widget*>(this->getChildByTag(1));
+	auto waveLabel = dynamic_cast<TextAtlas*>(hud->getChildByName("LableWave"));
+	char num[32] = { 0 };
+	sprintf(num, "%d", m_curRound);
+	waveLabel->setStringValue(num);
+
+
+
+	m_monsterCreateLeft = 1 + m_curRound * 2;
+	schedule(schedule_selector(TowerScene::makeMonster), 0.5f);
+}
+ 
+
+void TowerScene::changeGold(int num){
+	auto hud = dynamic_cast<Widget*>(this->getChildByTag(1));
+	auto gold = dynamic_cast<TextAtlas*>(hud->getChildByName("LabelGold"));
+	char numStr[32] = { 0 };
+	m_gold += num;
+	sprintf(numStr, "%d", m_gold);
+	gold->setStringValue(numStr);
+}
+
+int TowerScene::changeLife(int num){
+	auto hud = dynamic_cast<Widget*>(this->getChildByTag(1));
+	auto life = dynamic_cast<TextAtlas*>(hud->getChildByName("LableLife"));
+	char numStr[32] = { 0 };
+	m_curLife += num;
+	sprintf(numStr, "%d", m_curLife);
+	life->setStringValue(numStr);
+	return m_curLife;
+}
+
+void TowerScene::removeMonster(Node*monster){
+	auto comMove = dynamic_cast<ComMove*>(monster->getComponent("ComMove"));
+	//存入缓冲
+	m_fireManager->m_tmpMonster.push_back(comMove);
+}
+
+	

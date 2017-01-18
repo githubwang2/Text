@@ -86,16 +86,20 @@ void MenuScene::menuTouchDown(Object* pSender, Control::EventType event){
 	switch (tag)
 	{
 	case Btn_Piano_Game_TAG:{
-								Director::getInstance()->replaceScene(Piano::createScene());
+								auto transScene = TransitionFadeTR::create(1, Piano::createScene());
+								Director::getInstance()->replaceScene(transScene);
 								break; }
 	case Btn_Plane_Game_TAG:{
-								Director::getInstance()->replaceScene(PlaneScene::createScene());
+								auto transScene = TransitionTurnOffTiles::create(1, PlaneScene::createScene());
+								Director::getInstance()->replaceScene(transScene);
 								break; }
 	case Btn_Paddle_Game_TAG:{
-								 Director::getInstance()->replaceScene(PaddleScene::createScene());
+								 auto transScene = TransitionSlideInL::create(1, PaddleScene::createScene());
+								 Director::getInstance()->replaceScene(transScene);
 								 break; }
 	case Btn_Tower_Game_TAG:{
-								Director::getInstance()->replaceScene(TowerScene::createScene());
+								auto transScene = TransitionProgressOutIn::create(1, TowerScene::createScene());
+								Director::getInstance()->replaceScene(transScene);
 								break; }
 	case Btn_Quit_Game_TAG:{
 							   Director::getInstance()->end();

@@ -5,6 +5,9 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
+#include "Components/Constants.h"
+#include "FireManager.h"
+
 USING_NS_CC;
 using namespace cocostudio;
 using namespace ui;
@@ -26,10 +29,17 @@ public:
 	
 	void createTower(Point pos);
 
-	
-
 	Point worldToTile(Point &pos);
 	std::string getValue(std::string key, Point&posIngl, TMXLayer*layer, TMXTiledMap*map);
+	//--------------HUD
+	//生成怪物波数
+	void createWaveRusher();
+	//金钱
+	void changeGold(int num);
+	//生命
+	int changeLife(int num);		//返回life 因为要判定是否为0
+	void removeMonster(Node*monster);
+
 private:
 	Size visibleSize;
 
@@ -41,7 +51,17 @@ private:
 	std::vector<Point>m_pathVec;
 
 	std::vector<Point>getWalkPath(const char*key);
+	//--------------------------------
+	FireManager*m_fireManager;
 
+	//生成怪物的波数
+	int m_curRound;
+	//该波生成怪物的数量
+	int m_monsterCreateLeft;
+
+	int m_gold;
+
+	int m_curLife;
 };
 
 #endif 

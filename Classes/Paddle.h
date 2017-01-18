@@ -12,7 +12,7 @@ using namespace ui;
 //球与砖块的密度，弹力，摩擦
 const PhysicsMaterial PHYSICS_MATERIAL_BALL_WORLD(1.0f, 1.0f, 0.0f);
 //挡板的密度，弹力，摩擦
-const PhysicsMaterial PHYSICS_MATERIAL_PADDLE(1.0f, 2.0f, 1.5f);
+const PhysicsMaterial PHYSICS_MATERIAL_PADDLE(1.0f, 2.0f, 0.0f);
 //关卡数
 const int TASK_MAX = 3;
 
@@ -76,12 +76,12 @@ private:
 	Sprite*m_ball;
 	Sprite*m_paddle;
 	
-	//
+	//预览页
 	ui::PageView*m_taskPage;
-
+	//
 	int m_taskSceneNum;
 	//砖块数目
-	int m_taskTargetNum;
+	int m_taskTargetNum=0;
 };
 
 #endif 

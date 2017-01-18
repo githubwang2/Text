@@ -6,7 +6,7 @@ USING_NS_CC;
 ComTower::ComTower()
 :m_isFiring(false)
 {
-
+	setName("ComTower");
 }
 
 

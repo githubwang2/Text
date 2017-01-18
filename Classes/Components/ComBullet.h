@@ -5,10 +5,12 @@
 
 
 
+//子弹组件
 
 class ComBullet :public cocos2d::Component
 {
 protected:
+	//子弹伤害，子弹速度
 	ComBullet(float fireDamage, float speed);
 
 public:
