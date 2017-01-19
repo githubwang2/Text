@@ -14,10 +14,6 @@ Tower   塔防
 代码中的图片声音资源来自《cocos2dx开发》该书。
 
 cocos2d-x3.2
+
 CocosStudio1.6
-开发工具及需要环境变量
-python
-java sdk
-android sdk
-android ndk
-Ant
+
