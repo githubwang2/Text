@@ -1,3 +1,7 @@
+
+
+
+
 #include "Tower/FireManager.h"
 
 bool FireManager::init(){
@@ -25,7 +29,7 @@ void FireManager::moveBullet(float dt){
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
-	bool hitMonster = false;
+	bool hitMonster = false;			//子弹是否已经打中怪物
 
 	//bullets
 
@@ -33,25 +37,29 @@ void FireManager::moveBullet(float dt){
 	{
 		hitMonster = false;
 		auto owner = bullet->getOwner();
-		Point realPos = Point(bullet->getSpeedX() + owner->getPositionX(),
+		Point realPos = Point(bullet->getSpeedX() + owner->getPositionX(),    //子弹现在的坐标加上速度
 			bullet->getSpeedY() + owner->getPositionY());
 		for (auto monster : m_monsters)
 		{
 			auto distance = realPos.getDistance(monster->getOwner()->getPosition());
-			if (distance < monster->getOwner()->getContentSize().width / 2)
+			if (distance < monster->getOwner()->getContentSize().width / 2) 
 			{
+				//如果子弹命中怪物   
+				//怪物掉血   
+				//hitMonster为true
+				//怪物死亡 移除怪物
 				auto comLife = dynamic_cast<ComLife*>(monster->getOwner()->getComponent("ComLife"));
 				bool isDead = comLife->attacked(bullet->getFireDamage());
 				hitMonster = true;
 				if (isDead)
 				{
-					hitMonster = true;
 					monster->getOwner()->removeFromParent();
 					m_monsters.remove(monster);
 					break;
 				}
 			}
 		}
+		//如果子弹命中怪物  或者子弹飞出屏幕  移除子弹
 		if (hitMonster || visibleSize.width < realPos.x || visibleSize.height <realPos.y || 0 > realPos.x || 0>realPos.y)
 		{
 			owner->removeFromParent();
@@ -82,7 +90,7 @@ void FireManager::moveBullet(float dt){
 				{
 					Sprite* bullet = Sprite::create("Tower/Bullet.png");
 					bullet->setPosition(owner->getPosition());
-					auto comBullet = ComBullet::create(10, 5);
+					auto comBullet = ComBullet::create(bullet_damage, bullet_speed);
 					bullet->addComponent(comBullet);
 					m_bullets.push_back(comBullet);
 
@@ -90,13 +98,13 @@ void FireManager::moveBullet(float dt){
 
 					owner->getParent()->addChild(bullet, 2);
 					tower->setIsFire(true);
-					runAction(Sequence::create(DelayTime::create(0.5f),
+					runAction(Sequence::create(DelayTime::create(tower->getRelodTime()),
 						CallFunc::create([=]{
 						tower->setIsFire(false);
 					}), nullptr));
 
-					bullet->setRotation(angle);
-					owner->setRotation(angle);
+					bullet->setRotation(angle);				//子弹旋转对准怪物
+					owner->setRotation(angle);				//防御塔旋转对准怪物
 					break;
 				}
 			}
@@ -104,4 +112,5 @@ void FireManager::moveBullet(float dt){
 	}
 }
 		
+
 

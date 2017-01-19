@@ -14,11 +14,9 @@ public:
 
 	virtual void onEnter() override;
 
-	
 	CC_SYNTHESIZE(bool, m_isFiring, IsFire);				//ËþÊÇ·ñ¿ª»ð
 	CC_PROPERTY_READONLY(int, m_range, Range);				//ËþµÄ¹¥»÷·¶Î§
 	CC_SYNTHESIZE_READONLY(float, m_reloadTime, RelodTime);	//ËþµÄ¹¥»÷¼ä¸ô
-
 
 private:
 

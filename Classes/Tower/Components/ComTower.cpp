@@ -25,8 +25,8 @@ ComTower*ComTower::create()
 }
 
 void ComTower::onEnter(){
-	m_range = 100;
-	m_reloadTime = 0.3;
+	m_range = 100;			//×Óµ¯¹¥»÷·¶Î§
+	m_reloadTime = 0.3;		//×Óµ¯¹¥»÷¼ä¸ôÊ±¼ä
 }
 
 int ComTower::getRange() const

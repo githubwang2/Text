@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
 #include "Menu/MenuScene.h"
-#include"Tower/TowerScene.h"
 
 USING_NS_CC;
 
@@ -21,7 +20,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     director->setAnimationInterval(1.0 / 60);
 

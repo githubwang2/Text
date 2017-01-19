@@ -18,11 +18,13 @@ public:
 	static ComBullet*create(float fireDamage, float speed);
 
 	virtual void onEnter() override;
-	//塔的坐标   怪物的坐标
+
+	// 塔的坐标   怪物的坐标
+	//返回 子弹对准怪物 所需旋转角度
 	float setSpeedXY(cocos2d::Point org, cocos2d::Point des);
 
-	CC_SYNTHESIZE_READONLY(float, m_speedX, SpeedX);
-	CC_SYNTHESIZE_READONLY(float, m_speedY, SpeedY);
+	CC_SYNTHESIZE_READONLY(float, m_speedX, SpeedX);					//子弹速度X轴上的分量
+	CC_SYNTHESIZE_READONLY(float, m_speedY, SpeedY);					//子弹速度Y轴上的分量
 	CC_SYNTHESIZE_READONLY(float, m_fireDamage, FireDamage);
 
 

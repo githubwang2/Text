@@ -25,6 +25,7 @@ ComLife*ComLife::create(int maxLife){
 }
 
 void ComLife::onEnter(){
+	//Éú³ÉÑªÌõ
 	auto owner = getOwner();
 	m_hpBar = ui::LoadingBar::create();
 	m_hpBar->loadTexture("Tower/Life.png");

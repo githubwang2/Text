@@ -120,7 +120,7 @@ void TowerScene::makeMonster(float dt){
 	monster->runAction(act2);
 	*/
 	//挂载怪物HP组件
-	auto comLife = ComLife::create(30);
+	auto comLife = ComLife::create(monster_hp);
 	monster->addComponent(comLife);
 	//挂载怪物移动组件
 	auto comMove = ComMove::create(m_pathVec);

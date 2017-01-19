@@ -2,7 +2,7 @@
 #define __MENU_SCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 USING_NS_CC_EXT;
 USING_NS_CC;
