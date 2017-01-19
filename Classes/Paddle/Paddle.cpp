@@ -1,4 +1,4 @@
-#include "Paddle.h"
+#include "Paddle/Paddle.h"
 
 Scene* PaddleScene::createScene(){
 	auto scene = Scene::createWithPhysics();

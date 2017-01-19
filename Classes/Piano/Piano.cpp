@@ -1,4 +1,7 @@
-#include "Piano.h"
+#include "Piano/Piano.h"
+#include "Menu/MenuScene.h"
+
+
 
 Scene* Piano::createScene()
 {
@@ -19,6 +22,8 @@ bool Piano::init()
 	origin = Director::getInstance()->getVisibleOrigin();
 
 	starPiano();
+	//auto input = dynamic_cast<TextField*>(widget->getChildByTag(101));
+	//input->addEventListenerTextField(this,textfieldeventselector(Piano::textInput));
 	return true;
 }
 
@@ -77,6 +82,21 @@ void Piano::menuButton(){
 
 void Piano::menuCloseCallback(Ref* pSender)
 {
-	Director::getInstance()->end();
+	Director::getInstance()->replaceScene(MenuScene::createScene());
 }
 
+//void Piano::textInput(Ref*object, ui::TextFiledEventType type){
+//	switch (type)
+//	{
+//	case TEXTFIELD_EVENT_ATTACH_WITH_IME:
+//	{
+//	TextField*textField = dynamic_cast<TextField*>(object);
+//	std::string words = textField->getStringValue();
+//	TextBMFont*label = dynamic_cast<TextBMFont*>(textField->getParent()->getChildByTag(100));
+//	label->setText(words.c_str());
+//	textField->setText("");
+//	}
+//		break;
+//	default:break;
+//	}
+//}

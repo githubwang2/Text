@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
-#include "MenuScene.h"
-#include"TowerScene.h"
+#include "Menu/MenuScene.h"
+#include"Tower/TowerScene.h"
 
 USING_NS_CC;
 
@@ -13,7 +13,7 @@ AppDelegate::~AppDelegate()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-    // initialize director
+
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
@@ -21,16 +21,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-    // turn on display FPS
     director->setDisplayStats(true);
 
-    // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    // create a scene. it's an autorelease object
 	auto scene = MenuScene::createScene();
 
-    // run
     director->runWithScene(scene);
 
     return true;

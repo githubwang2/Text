@@ -23,6 +23,7 @@ public:
 	void addParticle();
 	void menuButton();
 
+	//void textInput(Ref*object, TextFiledEventType type);
 private:
 	Size visibleSize ;
 	Vec2 origin;

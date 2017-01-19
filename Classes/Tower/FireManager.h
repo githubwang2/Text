@@ -1,4 +1,4 @@
-#include "Components/Constants.h"
+#include "Tower/Components/Constants.h"
 
 USING_NS_CC;
 
@@ -9,6 +9,7 @@ public:
 	virtual bool init();
 	CREATE_FUNC(FireManager);
 
+	//×Óµ¯ÒÆ¶¯
 	void moveBullet(float dt);
 
 public:
@@ -16,7 +17,7 @@ public:
 	std::list<ComTower*>	m_towers;;
 	std::list<ComMove*>		m_monsters;
 
-	//--
+	
 	std::list<ComMove*>m_tmpMonster;
 	
 };

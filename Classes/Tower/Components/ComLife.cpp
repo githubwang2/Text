@@ -1,5 +1,5 @@
-#include "Components/ComLife.h"
-#include"TowerScene.h"
+#include "Tower/Components/ComLife.h"
+#include"Tower/TowerScene.h"
 
 USING_NS_CC;
 

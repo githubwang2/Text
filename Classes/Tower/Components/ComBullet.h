@@ -5,7 +5,7 @@
 
 
 
-//子弹组件
+//防御塔子弹组件
 
 class ComBullet :public cocos2d::Component
 {
@@ -14,10 +14,11 @@ protected:
 	ComBullet(float fireDamage, float speed);
 
 public:
-
+	
 	static ComBullet*create(float fireDamage, float speed);
 
 	virtual void onEnter() override;
+	//塔的坐标   怪物的坐标
 	float setSpeedXY(cocos2d::Point org, cocos2d::Point des);
 
 	CC_SYNTHESIZE_READONLY(float, m_speedX, SpeedX);
@@ -27,8 +28,6 @@ public:
 
 private:
 	float m_speed;
-
-
 };
 
 #endif

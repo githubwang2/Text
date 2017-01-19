@@ -1,9 +1,9 @@
-#include "MenuScene.h"
+#include "Menu/MenuScene.h"
 
-#include"Paddle.h";
-#include"Piano.h";
-#include"PlaneScene.h";
-#include"TowerScene.h";
+#include"Paddle/Paddle.h";
+#include"Piano/Piano.h";
+#include"Plane/PlaneScene.h";
+#include"Tower/TowerScene.h";
 
 
 #define  NORMAL_MENU		"MENU/normal_menu.png"
