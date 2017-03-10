@@ -200,27 +200,8 @@ void PlaneScene::update(float dt){
 					}
 				}
 			}
-			/*for (int j = 0; j < allEnemyBul.size(); j++)
-			{
-			auto currentEnemyBul = allEnemyBul.at(j);
-			auto eneBulSize = currentEnemyBul->boundingBox().size;
-			Rect enemyBulRect(currentEnemyBul->getPositionX(), currentEnemyBul->getPositionY(),
-			eneBulSize.width, eneBulSize.height);
-			if (playerBulRect.intersectsRect(enemyBulRect))
-			{
-			if (currentPlayerBul != nullptr)
-			{
-			currentPlayerBul->removeFromParent();
-			allplayerBul.eraseObject(currentPlayerBul);
-
-			currentEnemyBul->removeFromParent();
-			allEnemy.eraseObject(currentEnemyBul);
-			}
-
-			}
-			}*/
 		}
-		//Íæ¼Ò×²ÉÏµĞ»ú
+		//ç©å®¶æ’ä¸Šæ•Œæœº
 		for (int i = 0; i < allEnemy.size(); i++)
 		{
 			auto currentEnemy = allEnemy.at(i);
@@ -243,7 +224,7 @@ void PlaneScene::update(float dt){
 				damagePlayer();
 			}
 		}
-		//Íæ¼Ò×²ÉÏµĞ»ú×Óµ¯
+		//ç©å®¶æ’ä¸Šæ•Œæœºå­å¼¹
 		for (int i = 0; i < allEnemyBul.size(); i++)
 		{
 			auto currentEnemyBul = allEnemyBul.at(i);
@@ -261,10 +242,10 @@ void PlaneScene::update(float dt){
 				createBoom(currentEnemyBul->getPositionX(), currentEnemyBul->getPositionY());
 				currentEnemyBul->removeFromParent();
 				currentEnemyBul->setPosition(0, 0);
-				//¹ØÓÚÕâ¸ö´òÒ»ÏÂ¾ÍËÀµÄÎÊÌâ¡£¡£¡£
-				//×Óµ¯¸ù±¾Ã»Ïû³ı Ö»ÊÇ¿´²»¼ûÁË ..ËùÒÔ¾ÍÓÃÕâ¸ö·½·¨ÔİÊ±´úÌæ
-				//ÎÊÌâÊÇÕâ»õÓ¦¸ÃÖ»ÊÇ´Ó¸¸½ÚµãÒÆ³ıÁË »¹ÔÚÄÇ¸öÎ»ÖÃ
-				//µĞ»úÒ²ÓĞÕâ¸öÎÊÌâ£¬µ±ÖØĞÂ¿ªÊ¼Ê± ÎªÏûÃğµÄµĞ»úÈÔÈ»»áÔÚÄÇ¸öÎ»ÖÃ£¬Ö»ÊÇ¿´²»¼ûÁË »¹»á·¢Éä×Óµ¯É¶µÄ
+				//å…³äºè¿™ä¸ªæ‰“ä¸€ä¸‹å°±æ­»çš„é—®é¢˜ã€‚ã€‚ã€‚
+				//å­å¼¹æ ¹æœ¬æ²¡æ¶ˆé™¤ åªæ˜¯çœ‹ä¸è§äº† ..æ‰€ä»¥å°±ç”¨è¿™ä¸ªæ–¹æ³•æš‚æ—¶ä»£æ›¿
+				//é—®é¢˜æ˜¯è¿™è´§åº”è¯¥åªæ˜¯ä»çˆ¶èŠ‚ç‚¹ç§»é™¤äº† è¿˜åœ¨é‚£ä¸ªä½ç½®
+				//æ•Œæœºä¹Ÿæœ‰è¿™ä¸ªé—®é¢˜ï¼Œå½“é‡æ–°å¼€å§‹æ—¶ ä¸ºæ¶ˆç­çš„æ•Œæœºä»ç„¶ä¼šåœ¨é‚£ä¸ªä½ç½®ï¼Œåªæ˜¯çœ‹ä¸è§äº† è¿˜ä¼šå‘å°„å­å¼¹å•¥çš„
 				allEnemy.eraseObject(currentEnemyBul);
 				//i--;
 
@@ -280,23 +261,6 @@ void PlaneScene::update(float dt){
 	}
 	else
 	{
-		/*auto gameOverDlg = GUIReader::getInstance()->widgetFromJsonFile("Plane/GameOverDlg/GameOverDlg.json");
-		gameOverDlg->setAnchorPoint(Point(0.5,0.5));
-		gameOverDlg->setPosition(visibleSize / 2);
-		gameOverDlg->setScale(0.5);
-		addChild(gameOverDlg, 3);
-		
-		auto restart = dynamic_cast<Widget*>(gameOverDlg->getChildByName("background")->getChildByName("Restart"));
-		auto exit = dynamic_cast<Widget*>(gameOverDlg->getChildByName("background")->getChildByName("Exit"));
-
-		restart->addTouchEventListener(this, toucheventselector(PlaneScene::touchButton));
-		exit->addTouchEventListener(this, toucheventselector(PlaneScene::touchButton));*/
-		
-		//restart->addTouchEventListener(CC_CALLBACK_1(PlaneScene::touchButton, this));
-		//exit->addTouchEventListener(CC_CALLBACK_1(PlaneScene::touchButton, this));
-	//this->unscheduleUpdate();  
-		//ÔÚ¼ÓÈëvoid gameControl(GameState gamestate);ºó 
-	//°Ñthis->unscheduleAllSelectors();·ÅÔÚresultÀïÃæÈ¥ÁË Ò²ºÃ ÌõÀí¸üÇåÎúÒ»µã
 	}
 }
 
@@ -339,9 +303,9 @@ void PlaneScene::starGame(){
 	m_gameState = Game;
 	//---------------------------------------HUD
 	auto hud = GUIReader::getInstance()->widgetFromJsonFile("Plane/HUD/HUD.json");
-	auto offset = Point(0, visibleSize.height - hud->getContentSize().height);//Õâ¸ö×ø±êÂùÓĞÈ¤µÄ
+	auto offset = Point(0, visibleSize.height - hud->getContentSize().height);//è¿™ä¸ªåæ ‡è›®æœ‰è¶£çš„
 	hud->setPosition(offset);
-	//addChild(hud, 0);//Õâ¸öËÆºõ»áµ²×¡ÎÒµÄ´¥Ãş¿ØÖÆ°¡
+	//addChild(hud, 0);
 	//hud->setAnchorPoint(Point(0.5,0.5));
 	//hud->setPosition(visibleSize / 2);
 	addChild(hud, 3);
@@ -391,7 +355,7 @@ void PlaneScene::gameControl(GameState gamestate){
 								break;
 	}
 	case GameState::Game:{
-							 m_gameState = Game;//Õâ¸öÕæµÄÓĞ±ØÒªĞ´Âğ
+							 m_gameState = Game;//è¿™ä¸ªçœŸçš„æœ‰å¿…è¦å†™å—
 							 removeAllChildren();
 							 Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
 							
@@ -409,7 +373,7 @@ void PlaneScene::gameControl(GameState gamestate){
 	}
 	case GameState::Result:{
 							   m_gameState = Result;
-							   //ÏÈÊÇÍ£ÏÂÓÎÏ·µÄÒ»Ğ©¶«Î÷
+							   //å…ˆæ˜¯åœä¸‹æ¸¸æˆçš„ä¸€äº›ä¸œè¥¿
 							   this->unscheduleAllSelectors();
 							   Director::getInstance()->getEventDispatcher()
 								   ->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
@@ -522,7 +486,7 @@ void PlaneScene::setHighScore(){
 
 	name->setText(UserDefault::getInstance()->getStringForKey("High_Name", "no people"));
 	// UserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
-	//Ä¬ÈÏÖµ£¬ Ã»ÕÒµ½·µ»ØÄ¬ÈÏÖµ
+	//é»˜è®¤å€¼ï¼Œ æ²¡æ‰¾åˆ°è¿”å›é»˜è®¤å€¼
 	int scoreNum = UserDefault::getInstance()->getIntegerForKey("High_Score", 0);
 	char scoreStr[256] = { 0 };
 	sprintf(scoreStr, "%d", scoreNum);
@@ -538,22 +502,12 @@ void PlaneScene::touchButton(Ref *object, TouchEventType type){
 		auto widget = dynamic_cast<Widget*>(object);
 		auto name = widget->getName();
 		if (name == "Exit")
-			//  if (name.compare("ExitGame") == 0) ÊéÉÏµÄÊµÏÖ·½Ê½
+			//  if (name.compare("ExitGame") == 0) ä¹¦ä¸Šçš„å®ç°æ–¹å¼
 		{
-			Director::getInstance()->end();//ÕâĞ©ÆäÊµ¶¼¿ÉÒÔ·ÅÔÚÓÎÏ·¿ØÖÆÀïÃæÈ¥
+			Director::getInstance()->end();//è¿™äº›å…¶å®éƒ½å¯ä»¥æ”¾åœ¨æ¸¸æˆæ§åˆ¶é‡Œé¢å»
 
 		}
-		//else if (name == "Restart")
-		//{
-		//	removeAllChildren();//Õâ¸öÊÂ±ØĞëµÄ ·ñÔò²»»á¿ªÊ¼
-		//	//Ã»ÓĞÕâ¸ö´¥ÃşÏìÓ¦»áºÜ¹îÒì
-		//	//»¹ĞèÒªÑĞ¾¿ÏÂ°¡ Õâ¸ö ÉÏÍø²éÏÂ ÄÄÌì
-		//	Director::getInstance()->getEventDispatcher()->removeAllEventListeners();
-		//	//ÊÂÊµÉÏÔÚ°²×¿ÉÏÈÔÈ»ÓĞÒ»¶¨ÎÊÌâ 
-		//	//1£º×Óµ¯²¢Ã»ÓĞÏû³ıÔÚÎ»ÖÃÈÔÈ»ÓĞ
-		//	//2£º´¥ÃşÒÀ¾ÉÎÊÌâ
-		//	starGame();
-		//}
+
 		else if (name == "StartGame")
 		{
 			gameControl(Game);
